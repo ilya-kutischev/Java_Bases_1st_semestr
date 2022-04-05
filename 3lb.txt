@@ -1,0 +1,127 @@
+import java.util.Scanner;
+
+public class Interval{
+    double start;
+    boolean st_include;
+    double end;
+    boolean end_include;
+
+    Interval(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Конструирование объекта interval");
+        System.out.printf("Enter  start of interval:");
+        System.out.println();
+        start = in.nextInt();
+        System.out.printf("Include start point?(True/False):");
+        System.out.println();
+        st_include = in.nextBoolean();
+
+        System.out.printf("Enter  end of interval:");
+        System.out.println();
+        end = in.nextInt();
+        System.out.printf("Include end point?(True/False):");
+        System.out.println();
+        end_include = in.nextBoolean();
+    }
+    Interval(double start_, boolean st_include_, double end_, boolean end_include_){
+        start = start_;
+        st_include = st_include_;
+        end = end_;
+        end_include = end_include_;
+    }
+
+    static Interval intersection(Interval i1,Interval i2) {
+        double new_start = 0, new_end = 0;
+        boolean new_st_include = false, new_end_include = false;
+        if (i1.start < i2.start) {
+            new_start = i2.start;
+            new_st_include = i2.st_include;
+        } else {
+            if (i1.start > i2.start) {
+                new_start = i1.start;
+                new_st_include = i1.st_include;
+            } else {
+                if (i1.start == i2.start) {
+                    new_start = i1.start;
+                    if (i1.st_include == i2.st_include) {
+                        new_st_include = i1.st_include;
+                    } else {
+                        new_st_include = false;
+                    }
+                }
+
+            }
+
+        }
+        if (i1.end < i2.end) {
+            new_end = i1.end;
+            new_end_include = i1.end_include;
+        } else {
+            if (i1.end > i2.end) {
+                new_end = i2.end;
+                new_end_include = i2.end_include;
+            } else {
+                if (i1.end == i2.end) {
+                    new_end = i1.end;
+                    if (i1.end_include == i2.end_include) {
+                        new_end_include = i1.end_include;
+                    } else {
+                        new_end_include = false;
+                    }
+                }
+
+            }
+
+        }
+        Interval temp = new Interval(new_start,new_st_include,new_end,new_end_include);
+        return temp;
+    }
+
+    static Interval union(Interval i1,Interval i2) {
+        double new_start = 0, new_end = 0;
+        boolean new_st_include = false, new_end_include = false;
+        if (i1.start < i2.start) {
+            new_start = i1.start;
+            new_st_include = i1.st_include;
+        } else {
+            if (i1.start > i2.start) {
+                new_start = i2.start;
+                new_st_include = i2.st_include;
+            } else {
+                if (i1.start == i2.start) {
+                    new_start = i1.start;
+                    if (i1.st_include == i2.st_include) {
+                        new_st_include = i1.st_include;
+                    } else {
+                        new_st_include = true;
+                    }
+                }
+
+            }
+
+        }
+        if (i1.end < i2.end) {
+            new_end = i2.end;
+            new_end_include = i2.end_include;
+        } else {
+            if (i1.end > i2.end) {
+                new_end = i1.end;
+                new_end_include = i1.end_include;
+            } else {
+                if (i1.end == i2.end) {
+                    new_end = i1.end;
+                    if (i1.end_include == i2.end_include) {
+                        new_end_include = i1.end_include;
+                    } else {
+                        new_end_include = true;
+                    }
+                }
+
+            }
+
+        }
+        Interval temp = new Interval(new_start,new_st_include,new_end,new_end_include);
+        return temp;
+    }
+
+}
